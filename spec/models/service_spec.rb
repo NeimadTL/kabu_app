@@ -7,5 +7,7 @@ RSpec.describe Service, type: :model do
   it { should validate_presence_of :price }
   it { is_expected.to allow_value('0.0').for(:price) }
   it { is_expected.to_not allow_value('-1').for(:price) }
+
+  it { is_expected.to belong_to(:category) }
   
 end
