@@ -3,6 +3,7 @@
 <% @services.each do |service| %>
 	<%= service.title %> <br>
 	<%= service.description %><br>
+	<%= link_to "Voir plus", service %><br>
 	<%= number_to_currency(service.price, unit: '€', separator: ",", 
 		delimiter: "", format: "%n %u") %><br>
 	<%= service.category.name %><br><br><br>

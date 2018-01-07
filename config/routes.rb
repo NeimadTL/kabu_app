@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'services#index'
-  # get 'services/index'
+
+  resources :services, only: [:show]
 
 end

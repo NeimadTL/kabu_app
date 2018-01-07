@@ -1,0 +1,7 @@
+<h1>Services#show</h1>
+
+
+<%= @service.title %> <br>
+<%= @service.description %><br>
+<%= number_to_currency(@service.price, unit: '€', separator: ",", delimiter: "", format: "%n %u") %><br>
+<%= @service.category.name %><br><br><br>
