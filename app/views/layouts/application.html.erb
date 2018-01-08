@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>KabuApp</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+	  <title>KabuApp</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	
+	<body>
 
-<%= yield %>
+		<header class="navbar">
+			<section class="navbar-section">
+			    <%= link_to "KABU APP", root_path, class: "navbar-brand mr-2" %>
+			</section>
+			<section class="navbar-section">
+			    <a href="#" class="btn btn-link">Twitter</a>
+			    <a href="#" class="btn btn-link">GitHub</a>
+			</section>
+		</header>
 
-</body>
+		<%= yield %>
+
+	</body>
 </html>
