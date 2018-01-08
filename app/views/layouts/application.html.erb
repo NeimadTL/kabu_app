@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	  <title>KabuApp</title>
-	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-	  <%= csrf_meta_tags %>
-	</head>
+  <head>
+    <title>KabuApp</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
 	
-	<body>
+  <body>
+    <header class="navbar">
+	  <section class="navbar-section">
+	    <%= link_to "KABU APP", root_path, class: "navbar-brand mr-2" %>
+	  </section>
+	  
+		<% if user_signed_in? %>
+		<section class="navbar-section">
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+      	<% else %>
+          <%= link_to 'Sign in', new_user_session_path %>
+          <%= link_to 'Sign up', new_user_registration_path %>
+        <% end %>
+	  </section>
+  	</header>
 
-		<header class="navbar">
-			<section class="navbar-section">
-			    <%= link_to "KABU APP", root_path, class: "navbar-brand mr-2" %>
-			</section>
-			<section class="navbar-section">
-			    <a href="#" class="btn btn-link">Twitter</a>
-			    <a href="#" class="btn btn-link">GitHub</a>
-			</section>
-		</header>
+  	<% if notice.present? %>
+	  <p class="text-success"><%= notice %></p>
+    <% end %>
+  	<% if alert.present? %>
+      <p class="text-error"><%= alert %></p>
+  	<% end %>
 
-		<%= yield %>
+  	<%= yield %>
 
-	</body>
+  </body>
 </html>
