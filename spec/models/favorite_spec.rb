@@ -24,5 +24,16 @@ RSpec.describe Favorite, type: :model do
   it { should be_valid }
   it { should respond_to(:user) }
   it { should respond_to(:service) }
+
+
+  describe "when service id is not present" do
+    before { favorite.service_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when user id is not present" do
+    before { favorite.user_id = nil }
+    it { should_not be_valid }
+  end
   
 end
