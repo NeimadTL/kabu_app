@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   root 'services#index'
 
   resources :services, only: [:show]
+  resources :favorites, only: [:create, :destroy]
 
 end
