@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :favorites
   has_many :services, :through => :favorites
+  has_many :comments, :dependent => :destroy
 
 
   # adds service to favorite list
