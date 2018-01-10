@@ -5,3 +5,34 @@
 <%= @service.description %><br>
 <%= number_to_currency(@service.price, unit: '€', separator: ",", delimiter: "", format: "%n %u") %><br>
 <%= @service.category.name %><br><br><br>
+
+<% if current_user %> 
+  <% if current_user.has_favorite?(@service) %>
+    <%= form_for(current_user.favorites.find_by(service_id: @service.id), 
+      html: { method: :delete }) do |f| %>
+      <%= f.submit "remove as fav", class: "btn " %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_user.favorites.build) do |f| %>
+	  <div><%= hidden_field_tag :service_id, @service.id %></div>
+	  <%= f.submit "add as fav", class: "btn" %>
+    <% end %>
+  <% end %>
+
+  <%= form_for @comment, url: service_comments_path(@service) do |f| %>
+  	<div>
+    <%= f.number_field :score, label: false %>
+    </br>
+    <%= f.text_field :content, label: false %>
+    </div>
+    </br>
+    <%= f.submit 'Send', class: 'btn' %>  
+  <% end %>
+
+<% end %>
+
+<h1>Comments</h1>
+<% @service.comments.each do |comment| %>
+	<%= comment.score %> / 5 <br>
+	<%= comment.content %> <br>
+<% end %>
