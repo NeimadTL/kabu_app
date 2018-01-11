@@ -1,0 +1,26 @@
+<H1>Favorite page</H1>
+
+<% if @favorites && !@favorites.empty? %>
+
+  <table class="table table-striped">
+    <thead></thead>
+    <tbody>
+      <% @favorites.each do |favorite| %>
+  	    <tr>
+  	      <td>
+  		    <%= favorite.service.title %> <br>
+		    <%= favorite.service.description %><br>
+		    <%= number_to_currency(favorite.service.price, unit: '€', separator: ",", 
+			    delimiter: "", format: "%n %u") %><br>
+		    <%= favorite.service.category.name %><br>
+		    <%= link_to "Voir plus", favorite.service, class: "btn" %><br>
+		  </td>
+  	    </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+	<p>Pas de services favoris</p>
+	<%= link_to "Chercher des services", root_path, class: "btn" %><br>
+<% end %>
+

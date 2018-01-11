@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   resources :services, only: [:show] do
     resources :comments, only: [:create]
   end
-  resources :favorites, only: [:create, :destroy]
+  resources :favorites, only: [:index, :create, :destroy]
 
 end
