@@ -6,7 +6,6 @@ class FavoritesController < ApplicationController
 
   def index
     @favorites = current_user.favorites
-    puts "#{@favorite_services.inspect}"
   end
 
 

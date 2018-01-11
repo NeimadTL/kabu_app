@@ -42,4 +42,18 @@ RSpec.describe FavoritesController, type: :controller do
     end
   end
 
+
+  describe "when GET #index" do
+
+    before do
+      sign_in(user, nil)
+      get :index
+    end
+
+    it "returns http success" do
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+
 end
