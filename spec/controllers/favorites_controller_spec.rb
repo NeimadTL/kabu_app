@@ -28,7 +28,7 @@ RSpec.describe FavoritesController, type: :controller do
 
     it "returns http redirect and redirects to root path" do
       expect(response).to have_http_status(:redirect)
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(service_path(service))
     end
 
 
@@ -37,7 +37,7 @@ RSpec.describe FavoritesController, type: :controller do
 
       it "returns http redirect and redirects to root path" do
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(service_path(service))
       end
     end
   end

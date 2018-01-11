@@ -8,24 +8,10 @@
   	    <td>
   		  <%= service.title %> <br>
 		  <%= service.description %><br>
-		  <%= link_to "Voir plus", service, class: "btn" %><br>
 		  <%= number_to_currency(service.price, unit: '€', separator: ",", 
 			  delimiter: "", format: "%n %u") %><br>
-		  <%= service.category.name %><br><br><br>
-
-		  <% if current_user %> 
-		    <% if current_user.has_favorite?(service) %>
-	  	      <%= form_for(current_user.favorites.find_by(service_id: service.id), 
-	              html: { method: :delete }) do |f| %>
-	  	  	    <%= f.submit "remove as fav", class: "btn " %>
-	  	      <% end %>
-		    <% else %>
-		      <%= form_for(current_user.favorites.build) do |f| %>
-		  	    <div><%= hidden_field_tag :service_id, service.id %></div>
-		  	    <%= f.submit "add as fav", class: "btn" %>
-		      <% end %>
-		    <% end %>
-		  <% end %>
+		  <%= service.category.name %><br>
+		  <%= link_to "Voir plus", service, class: "btn" %><br>
 		</td>
   	  </tr>
     <% end %>
