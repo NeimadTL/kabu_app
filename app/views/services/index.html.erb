@@ -12,11 +12,6 @@
 			  delimiter: "", format: "%n %u") %><br>
 		  <%= service.category.name %><br>
 		  <%= link_to "Voir plus", service, class: "btn" %><br>
-      <% if current_user && service.user == current_user %>
-        <%= link_to "Modifier", edit_business_service_path(service), class: "btn" %><br>
-        <%= link_to "Supprimer", business_service_path(service), method: :delete, 
-            data: {confirm: 'Are you sure you want to delete this?'}, class: "btn" %><br>
-      <% end %>
 		</td>
   	  </tr>
     <% end %>

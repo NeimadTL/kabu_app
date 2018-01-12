@@ -1,0 +1,14 @@
+<h1>MyServices#show</h1>
+
+
+<%= @service.title %> <br>
+<%= @service.description %><br>
+<%= number_to_currency(@service.price, unit: '€', separator: ",", delimiter: "", format: "%n %u") %><br>
+<%= @service.category.name %><br><br><br>
+
+
+<h1>Comments</h1>
+<% @service.comments.each do |comment| %>
+	<%= comment.score %> / 5 <br>
+	<%= comment.content %> <br>
+<% end %>

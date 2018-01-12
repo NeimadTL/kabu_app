@@ -2,8 +2,13 @@ class Business::ServicesController < ApplicationController
 
 
   before_action :authenticate_user!
-  before_action :set_service, only: [:edit, :update, :destroy]
-  before_action :require_authorized_for_current_service, only: [:edit, :update, :destroy]
+  before_action :set_service, only: [:show, :edit, :update, :destroy]
+  before_action :require_authorized_for_current_service, only: [:show, :edit, :update, :destroy]
+
+
+  def index
+    @services = current_user.services_for_business
+  end
 
 
   def new
@@ -21,6 +26,11 @@ class Business::ServicesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+
+  def show
+    
   end
 
 

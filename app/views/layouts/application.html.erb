@@ -16,6 +16,7 @@
 		<% if user_signed_in? %>
     <section class="navbar-section">
       <%= link_to "Provide A Service", new_business_service_path %>
+      <%= link_to "Show My Services", business_services_path %>
     </section>
 		<section class="navbar-section">
           <%= link_to 'Favorites', favorites_path %>

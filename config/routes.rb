@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :favorites, only: [:index, :create, :destroy]
 
   namespace :business do
-    resources :services, only: [:new, :create, :edit, :update, :destroy]
+    resources :services, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   end
 
 end
