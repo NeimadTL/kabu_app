@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   resources :services, only: [:show] do
     resources :comments, only: [:create]
   end
+
   resources :favorites, only: [:index, :create, :destroy]
+
+  namespace :business do
+    resources :services, only: [:new, :create, :edit, :update, :destroy]
+  end
 
 end

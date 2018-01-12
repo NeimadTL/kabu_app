@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :favorites
   has_many :services, :through => :favorites
   has_many :comments, :dependent => :destroy
+  has_many :services_for_business, foreign_key: "user_id", class_name: "Service"
 
 
   # adds service to favorite list

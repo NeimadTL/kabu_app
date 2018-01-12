@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'sprockets'
 # gem 'popper_js', '~> 1.12.9'
 gem 'devise', '>= 3.2.4'
+gem 'simple_form'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

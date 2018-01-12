@@ -1,0 +1,9 @@
+<h1>Edit page</h1>
+
+<%= simple_form_for @service, url: business_service_path(@service) do |f| %>
+  <%= f.input :title, label: false, placeholder: 'Title' %>
+  <%= f.input :description, label: false, placeholder: 'Description' %>
+  <%= f.input :price, label: false, placeholder: 'Price' %>
+  <%= f.input :category_id, collection: @categories, label: false, placeholder: 'Category' %>
+  <%= f.submit 'Update', class: 'btn' %>
+<% end %>
