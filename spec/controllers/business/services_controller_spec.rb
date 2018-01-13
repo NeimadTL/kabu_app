@@ -55,7 +55,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    describe "with no user is logged in," do
+    describe "with no user logged in," do
 
       before do
         sign_out(user)
@@ -84,6 +84,11 @@ RSpec.describe Business::ServicesController, type: :controller do
               price: '9.9',
               category_id: agriculture.id
             } 
+      created_serivce = Service.last
+      expect(created_serivce.title).to eq 'my awesome service'
+      expect(created_serivce.description).to eq 'my super description'
+      expect(created_serivce.price).to be == 9.9
+      expect(created_serivce.category_id).to be == agriculture.id
       expect(flash[:notice]).to match('Prestation crée avec succès')
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(business_services_path)
@@ -95,7 +100,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       expect(response).to render_template(:new)
     end
 
-    describe "with no user is logged in," do
+    describe "with no user logged in," do
 
       before do
         sign_out(user)
@@ -134,7 +139,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       expect(response.body).to eq "Unauthorized"
     end
 
-    describe "with no user is logged in," do
+    describe "with no user logged in," do
 
       before do
         sign_out(user)
@@ -166,7 +171,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       expect(response.body).to eq "Unauthorized"
     end
 
-    describe "with no user is logged in," do
+    describe "with no user logged in," do
 
       before do
         sign_out(user)
@@ -178,6 +183,98 @@ RSpec.describe Business::ServicesController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
     end
+  end
+
+
+  describe "when PUT #update" do
+
+    before do
+      sign_in(user, nil)
+    end
+
+    it "with authorized logged in user, returns http redirect" do
+      put :update, 
+          id: service.id, 
+          service: {
+            title: 'my awesome service',
+            description: 'my super description',
+            price: '100',
+          } 
+      updated_service = Service.find(service.id)
+      expect(updated_service.title).to eq 'my awesome service'
+      expect(updated_service.description).to eq 'my super description'
+      expect(updated_service.price).to be == 100.0
+      expect(flash[:notice]).to match('Prestation modifiée avec succès')
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(business_services_path)
+    end
+
+    it "with unauthorized logged in user, returns http unauthorized" do
+      Service.find(service.id).update_attributes(user_id: nil)
+      put :update, 
+          id: service.id,
+          service: {
+            title: 'my awesome service',
+            description: 'my super description',
+            price: '100',
+          }
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eq "Unauthorized"
+    end
+
+    describe "with no user logged in," do
+
+      before do
+        sign_out(user)
+      end
+
+      it "returns http redirect" do
+        put :update, 
+            id: service.id,
+            service: {
+            title: 'my awesome service',
+            description: 'my super description',
+            price: '100',
+          }
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe "when DELETE #destroy" do
+
+    before do
+      sign_in(user, nil)
+    end
+
+    it "with authorized logged in user, returns http redirect" do
+      delete :destroy, id: service.id
+      expect(flash[:notice]).to match('Prestation supprimée avec succès')
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(business_services_path)
+    end
+
+    it "with unauthorized logged in user, returns http unauthorized" do
+      Service.find(service.id).update_attributes(user_id: nil)
+      delete :destroy, id: service.id
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eq "Unauthorized"
+    end
+
+    describe "with no user logged in," do
+
+      before do
+        sign_out(user)
+      end
+
+      it "returns http redirect" do
+        delete :destroy, id: service.id
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
   end
 
 end
