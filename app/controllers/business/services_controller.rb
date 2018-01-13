@@ -22,7 +22,7 @@ class Business::ServicesController < ApplicationController
     
     if @service.valid?
       flash[:notice] = 'Prestation crée avec succès'
-      redirect_to root_path
+      redirect_to business_services_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class Business::ServicesController < ApplicationController
 
     if @service.valid?
       flash[:notice] = 'Prestation modifiée avec succès'
-      redirect_to root_path
+      redirect_to business_services_path
     else
       render :edit, status: :unprocessable_entity
     end
@@ -54,7 +54,7 @@ class Business::ServicesController < ApplicationController
   def destroy
     @service.destroy
     flash[:notice] = 'Prestation supprimée avec succès'
-    redirect_to root_path
+    redirect_to business_services_path
   end
 
 
