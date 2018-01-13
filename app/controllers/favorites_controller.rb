@@ -2,6 +2,7 @@ class FavoritesController < ApplicationController
 
 
   before_action :authenticate_user!
+  before_action :require_authorized_for_current_service
 
 
   def index
@@ -21,4 +22,13 @@ class FavoritesController < ApplicationController
     current_user.delete_as_favorite(@service)
     redirect_to service_path(@service)
   end
+
+
+  private
+
+    def require_authorized_for_current_service
+      if current_user.for_business
+        render text: "Unauthorized", status: :unauthorized
+      end
+    end
 end

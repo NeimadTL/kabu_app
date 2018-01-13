@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe FavoritesController, type: :controller do
 
   let(:user) { 
-    User.create!(email: "something@gmail.com", password: "12345678", password_confirmation: "12345678")
+    User.create!(email: "something@gmail.com", password: "12345678", 
+      password_confirmation: "12345678", for_business: false)
   }
   let(:agriculture) { Category.create!(name: 'AGRICULTURE') }
   let(:service) {
@@ -19,28 +20,77 @@ RSpec.describe FavoritesController, type: :controller do
 
 
   describe "when POST create" do
-    subject { user }
+    
+    before do
+      sign_in(user, nil)
+      post :create, service_id: service.id
+    end
 
+    it "with authorised logged in user, returns http redirect and redirects to root path" do
+      expect(Favorite.exists?(user_id: user.id, service_id: service.id)).to eq true
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(service_path(service))
+    end
+
+    it "with unauthorized logged in user, returns http unauthorized" do
+      sign_out(user) # don't know why I should do that
+      User.find(user.id).update_attributes(for_business: true)
+      sign_in(user, nil)
+      post :create, service_id: service.id
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eq "Unauthorized"
+    end
+
+    describe "with no user logged in," do
+
+      before do
+        sign_out(user)
+      end
+
+      it "returns http redirect" do
+        post :create, service_id: service.id
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+
+  describe "and when DELETE destroy" do
     before do
       sign_in(user, nil)
       post :create, service_id: service.id
     end
 
     it "returns http redirect and redirects to root path" do
+      delete :destroy, id: service.id
+      expect(Favorite.exists?(user_id: user.id, service_id: service.id)).to eq false
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(service_path(service))
     end
 
+    it "with unauthorized logged in user, returns http unauthorized" do
+      sign_out(user) # don't know why I should do that
+      User.find(user.id).update_attributes(for_business: true)
+      sign_in(user, nil)
+      delete :destroy, id: service.id
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eq "Unauthorized"
+    end
 
-    describe "and when DELETE destroy" do
-      before { delete :destroy, id: service.id }
+    describe "with no user logged in," do
+      before do
+        sign_out(user)
+      end
 
-      it "returns http redirect and redirects to root path" do
+      it "returns http redirect" do
+        delete :destroy, id: service.id
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(service_path(service))
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
+
 
 
   describe "when GET #index" do
@@ -50,8 +100,31 @@ RSpec.describe FavoritesController, type: :controller do
       get :index
     end
 
-    it "returns http success" do
+    it "with authorised logged in user, returns http success" do
       expect(response).to have_http_status(:success)
+    end
+
+    it "with unauthorized logged in user, returns http unauthorized" do
+      sign_out(user) # don't know why I should do that
+      User.find(user.id).update_attributes(for_business: true)
+      sign_in(user, nil)
+      get :index
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eq "Unauthorized"
+    end
+
+
+    describe "with no user logged in," do
+
+      before do
+        sign_out(user)
+      end
+
+      it "returns http redirect" do
+        get :index
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
   end
 

@@ -3,7 +3,7 @@ class Business::ServicesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_service, only: [:show, :edit, :update, :destroy]
-  before_action :require_authorized_for_current_service, only: [:show, :edit, :update, :destroy]
+  before_action :require_authorized_for_current_service
 
 
   def index
@@ -58,14 +58,14 @@ class Business::ServicesController < ApplicationController
   end
 
 
-  private 
+  private
 
     def service_params
       params.require(:service).permit(:title, :description, :price, :category_id)
     end
 
     def require_authorized_for_current_service
-      if set_service.user != current_user
+      unless current_user.for_business
         render text: "Unauthorized", status: :unauthorized
       end
     end

@@ -9,23 +9,24 @@
 	
   <body>
     <header class="navbar">
-	  <section class="navbar-section">
-	    <%= link_to "KABU APP", root_path, class: "navbar-brand mr-2" %>
-	  </section>
-	  
-		<% if user_signed_in? %>
-    <section class="navbar-section">
-      <%= link_to "Provide A Service", new_business_service_path %>
-      <%= link_to "Show My Services", business_services_path %>
-    </section>
-		<section class="navbar-section">
+	    <section class="navbar-section">
+	      <%= link_to "KABU APP", root_path, class: "navbar-brand mr-2" %>
+	    </section>
+      
+		  <% if user_signed_in? %>
+        <% if current_user.for_business? %>
+          <section class="navbar-section">
+            <%= link_to "Provide A Service", new_business_service_path %>
+            <%= link_to "Show My Services", business_services_path %>
+          </section>
+        <% else %>
           <%= link_to 'Favorites', favorites_path %>
-          <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
-      	<% else %>
-          <%= link_to 'Sign in', new_user_session_path %>
-          <%= link_to 'Sign up', new_user_registration_path %>
         <% end %>
-	  </section>
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to 'Sign in', new_user_session_path %>
+        <%= link_to 'Sign up', new_user_registration_path %>
+      <% end %>
   	</header>
 
   	<% if notice.present? %>

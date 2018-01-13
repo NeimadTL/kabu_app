@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Business::ServicesController, type: :controller do
 
   let(:user) { 
-    User.create!(email: "something@gmail.com", password: "12345678", password_confirmation: "12345678")
+    User.create!(email: "something@gmail.com", password: "12345678", 
+      password_confirmation: "12345678", for_business: true)
   }
   let(:agriculture) { Category.create!(name: 'AGRICULTURE') }
   let(:service) {
@@ -133,7 +134,7 @@ RSpec.describe Business::ServicesController, type: :controller do
     end
 
     it "with unauthorized logged in user, returns http unauthorized" do
-      Service.find(service.id).update_attributes(user_id: nil)
+      User.find(user.id).update_attributes(for_business: false)
       get :show, id: service.id
       expect(response).to have_http_status(:unauthorized)
       expect(response.body).to eq "Unauthorized"
@@ -165,7 +166,7 @@ RSpec.describe Business::ServicesController, type: :controller do
     end
 
     it "with unauthorized logged in user, returns http unauthorized" do
-      Service.find(service.id).update_attributes(user_id: nil)
+      User.find(user.id).update_attributes(for_business: false)
       get :edit, id: service.id
       expect(response).to have_http_status(:unauthorized)
       expect(response.body).to eq "Unauthorized"
@@ -210,7 +211,7 @@ RSpec.describe Business::ServicesController, type: :controller do
     end
 
     it "with unauthorized logged in user, returns http unauthorized" do
-      Service.find(service.id).update_attributes(user_id: nil)
+      User.find(user.id).update_attributes(for_business: false)
       put :update, 
           id: service.id,
           service: {
@@ -256,7 +257,7 @@ RSpec.describe Business::ServicesController, type: :controller do
     end
 
     it "with unauthorized logged in user, returns http unauthorized" do
-      Service.find(service.id).update_attributes(user_id: nil)
+      User.find(user.id).update_attributes(for_business: false)
       delete :destroy, id: service.id
       expect(response).to have_http_status(:unauthorized)
       expect(response.body).to eq "Unauthorized"
