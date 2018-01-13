@@ -6,6 +6,16 @@ RSpec.describe Business::ServicesController, type: :controller do
     User.create!(email: "something@gmail.com", password: "12345678", password_confirmation: "12345678")
   }
   let(:agriculture) { Category.create!(name: 'AGRICULTURE') }
+  let(:service) {
+    Service.create!(title: 'Prestation d\'agriculture', 
+    description: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+    It has survived not only five centuries, but also the leap into electronic typesetting, 
+    remaining essentially unchanged. It was popularised in the 1960s with the release of 
+    Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing 
+    software like Aldus PageMaker including versions of Lorem Ipsum.',
+    price: '9.9', category_id: agriculture.id, user_id: user.id)
+  }
 
 
   describe "when GET #index" do
@@ -19,7 +29,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    describe "with no user logged in," do
+    describe "with no user is logged in," do
 
       before do
         sign_out(user)
@@ -45,7 +55,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    describe "with no user logged in," do
+    describe "with no user is logged in," do
 
       before do
         sign_out(user)
@@ -85,7 +95,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       expect(response).to render_template(:new)
     end
 
-    describe "with no user logged in," do
+    describe "with no user is logged in," do
 
       before do
         sign_out(user)
@@ -99,6 +109,71 @@ RSpec.describe Business::ServicesController, type: :controller do
               price: '9.9',
               category_id: agriculture.id
             } 
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+
+  describe "when GET #show" do
+
+    before do
+      sign_in(user, nil)
+    end
+
+    it "with authorized logged in user, returns http success" do
+      get :show, id: service.id
+      expect(response).to have_http_status(:success)
+    end
+
+    it "with unauthorized logged in user, returns http unauthorized" do
+      Service.find(service.id).update_attributes(user_id: nil)
+      get :show, id: service.id
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eq "Unauthorized"
+    end
+
+    describe "with no user is logged in," do
+
+      before do
+        sign_out(user)
+      end
+
+      it "returns http redirect" do
+        get :show, id: service.id
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe "when GET #edit" do
+
+    before do
+      sign_in(user, nil)
+    end
+
+    it "with authorized logged in user, returns http success" do
+      get :edit, id: service.id
+      expect(response).to have_http_status(:success)
+    end
+
+    it "with unauthorized logged in user, returns http unauthorized" do
+      Service.find(service.id).update_attributes(user_id: nil)
+      get :edit, id: service.id
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eq "Unauthorized"
+    end
+
+    describe "with no user is logged in," do
+
+      before do
+        sign_out(user)
+      end
+
+      it "returns http redirect" do
+        get :edit, id: service.id
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(new_user_session_path)
       end
