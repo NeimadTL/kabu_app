@@ -1,18 +1,69 @@
-<h1>MyServices#show</h1>
+<div class="container grid-xl">
+  <div class="columns">
+    
+    <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
+      <h5>Ma prestation</h5>
+    </div>
 
-<% if @service.picture.present? %>
-  <%= image_tag @service.picture, size: "200x200" %><br>
-<% else %>
-  <%= image_tag 'default-picture', size: "200x200" %><br>
-<% end %>
-<%= @service.title %> <br>
-<%= @service.description %><br>
-<%= number_to_currency(@service.price, unit: '€', separator: ",", delimiter: "", format: "%n %u") %><br>
-<%= @service.category.name %><br><br><br>
+    <div class="column col-2 col-xl-2 col-lg-4 col-md-6 col-sm-8 col-xs-8">
+      <% if current_user.for_business? %>
+        <%= link_to  business_services_path, class: 'btn btn-primary btn-sm' do %>
+            <i class="icon icon-back"></i> Précédent
+        <% end %> 
+      <% end %>
+    </div>
+    <div class="container grid-xl">
+      <div class="columns">
+        <div class="column col-12">
+		  <% if @service.picture.present? %>
+		    <%= image_tag @service.picture, class: 'img-responsive' %><br>
+		  <% else %>
+		    <%= image_tag 'default-picture', class: 'img-responsive' %><br>
+		  <% end %>
+		</div>
+      </div>
+    </div>
 
+    <div class="container grid-xl">
+      <div class="columns">
+        <div class="column col-12">
+          <div class="text-bold text-uppercase">
+			<%= @service.title %>
+		  </div>
+		  <div class="text-break text-justify">
+			<%= @service.description %>
+		  </div>
+		  <div class="text-large">
+			<%= number_to_currency(@service.price, unit: '€', separator: ",", 
+				delimiter: "", format: "%n %u") %><br>
+		  </div>
+		  <div class="text-italic text-lowercase">
+			<p>#<%= @service.category.name %></p><br>
+		  </div>
+		</div>
+      </div>
+    </div>
 
-<h1>Comments</h1>
-<% @service.comments.each do |comment| %>
-	<%= comment.score %> / 5 <br>
-	<%= comment.content %> <br>
-<% end %>
+    <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
+	  <h5>Commentaires</h5>
+	</div>
+
+	<% @service.comments.each do |comment| %>
+	  <div class="container grid-xl">
+	    <div class="columns">
+	      <div class="column col-12">
+	        <div class="">
+	  		  <%= comment.score %> / 5
+	  	    </div>
+	  	    <div class="text-italic">
+	  		  <%= comment.content %>
+	  	    </div>
+	  	    <div class="text-bold">
+	      	  <p>Par @Damien</p>
+	      	</div>
+	  	  </div>
+        </div>
+      </div>
+	<% end %>
+  </div>
+</div>
