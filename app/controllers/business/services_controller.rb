@@ -13,7 +13,6 @@ class Business::ServicesController < ApplicationController
 
   def new
     @service = Service.new
-    @categories = Category.all
   end
 
 
