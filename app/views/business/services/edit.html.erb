@@ -1,10 +1,41 @@
-<h1>Edit page</h1>
+<div class="container grid-xl">
+  <div class="columns">
+    
+    <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
+      <h5>Modifier votre prestation</h5>
+    </div>
 
-<%= simple_form_for @service, url: business_service_path(@service) do |f| %>
-  <%= f.input :title, label: false, placeholder: 'Title' %>
-  <%= f.input :description, label: false, placeholder: 'Description' %>
-  <%= f.input :price, label: false, placeholder: 'Price' %>
-  <%= f.input :category_id, collection: @categories, label: false, placeholder: 'Category' %>
-  <%= f.input :picture, label: false, placeholder: 'Image' %>
-  <%= f.submit 'Update', class: 'btn' %>
-<% end %>
+    <div class="column col-2 col-xl-2 col-lg-4 col-md-6 col-sm-8 col-xs-8">
+      <% if current_user.for_business? %>
+        <%= link_to  business_services_path, class: 'btn btn-primary btn-sm' do %>
+            <i class="icon icon-back"></i> Précédent
+        <% end %> 
+      <% end %>
+    </div>
+
+    <div class="container grid-xl">
+      <div class="columns">
+        <div class="column col-12">
+		  <%= simple_form_for @service, url: business_service_path(@service) do |f| %>
+		    <%= f.input :title, label: false, placeholder: 'Title', 
+		  	    input_html: { class: 'form-input' } %>
+		    <br>
+		    <%= f.input :description, label: false, placeholder: 'Description', 
+		  	    input_html: { class: 'form-input' } %>
+		    <br>
+		    <%= f.input :price, label: false, placeholder: 'Price', 
+		  	    input_html: { class: 'form-input' } %>
+		    <br>
+		    <%= f.input :category_id, collection: @categories, label: false, 
+		  	    prompt: "Sélectionnez votre catégory", input_html: { class: 'form-select' } %>
+		    <br>
+		    <%= f.input :picture, label: false, placeholder: 'Image', 
+		    	input_html: { class: 'form-input' } %>
+		    <br>
+		  	<%= f.submit 'Modfier', class: 'btn' %>
+		  <% end %>
+		</div>
+	  </div>
+    </div>
+  </div>
+</div>
