@@ -8,13 +8,18 @@
       <% @favorites.each do |favorite| %>
   	    <tr>
   	      <td>
-  		    <%= favorite.service.title %> <br>
-		    <%= favorite.service.description %><br>
-		    <%= number_to_currency(favorite.service.price, unit: '€', separator: ",", 
-			    delimiter: "", format: "%n %u") %><br>
-		    <%= favorite.service.category.name %><br>
-		    <%= link_to "Voir plus", favorite.service, class: "btn" %><br>
-		  </td>
+            <% if favorite.service.picture.present? %>
+              <%= image_tag favorite.service.picture, size: "200x200" %><br>
+            <% else %>
+              <%= image_tag 'default-picture', size: "200x200" %><br>
+            <% end %>
+  		      <%= favorite.service.title %> <br>
+		        <%= favorite.service.description %><br>
+		        <%= number_to_currency(favorite.service.price, unit: '€', separator: ",", 
+			      delimiter: "", format: "%n %u") %><br>
+		        <%= favorite.service.category.name %><br>
+		        <%= link_to "Voir plus", favorite.service, class: "btn" %><br>
+		      </td>
   	    </tr>
       <% end %>
     </tbody>

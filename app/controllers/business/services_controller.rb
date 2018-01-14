@@ -60,7 +60,7 @@ class Business::ServicesController < ApplicationController
   private
 
     def service_params
-      params.require(:service).permit(:title, :description, :price, :category_id)
+      params.require(:service).permit(:title, :description, :price, :category_id, :picture)
     end
 
     def require_to_be_business_provider

@@ -6,13 +6,18 @@
     <% @services.each do |service| %>
   	  <tr>
   	    <td>
-  		  <%= service.title %> <br>
-		  <%= service.description %><br>
-		  <%= number_to_currency(service.price, unit: '€', separator: ",", 
-			  delimiter: "", format: "%n %u") %><br>
-		  <%= service.category.name %><br>
-		  <%= link_to "Voir plus", service, class: "btn" %><br>
-		</td>
+          <% if service.picture.present? %>
+              <%= image_tag service.picture, size: "200x200" %><br>
+            <% else %>
+              <%= image_tag 'default-picture', size: "200x200" %><br>
+            <% end %>
+  		    <%= service.title %> <br>
+		      <%= service.description %><br>
+		      <%= number_to_currency(service.price, unit: '€', separator: ",", 
+			        delimiter: "", format: "%n %u") %><br>
+		      <%= service.category.name %><br>
+		      <%= link_to "Voir plus", service, class: "btn" %><br>
+		    </td>
   	  </tr>
     <% end %>
   </tbody>
