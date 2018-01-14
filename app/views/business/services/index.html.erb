@@ -70,8 +70,14 @@
         </tbody>
       </table>
     <% else %>
-    	<p>Vous n'avez pas encore proposé de prestations</p>
-    	<%= link_to "Proposez une prestation", new_business_service_path, class: "btn" %><br>
+      <div class="container grid-xl">
+        <div class="columns">
+          <div class="column col-6">
+              <p>Vous n'avez pas encore proposé de prestations</p>
+          </div>
+        </div>
+      </div>
+      <%= link_to "Proposer une prestation", new_business_service_path, class: "btn" %><br>
     <% end %>
   </div>
 </div>

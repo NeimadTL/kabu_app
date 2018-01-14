@@ -6,9 +6,15 @@
     </div>
 
     <div class="column col-2 col-xl-2 col-lg-4 col-md-6 col-sm-8 col-xs-8">
-      <%= link_to root_path, class: 'btn btn-primary btn-sm' do %>
-          <i class="icon icon-back"></i> Précédent
-      <% end %> 
+      <% if current_user %>
+        <%= link_to favorites_path, class: 'btn btn-primary btn-sm' do %>
+            <i class="icon icon-back"></i> Précédent
+        <% end %>
+      <% else %>
+        <%= link_to root_path, class: 'btn btn-primary btn-sm' do %>
+            <i class="icon icon-back"></i> Précédent
+        <% end %>
+      <% end %>
     </div>
 
 

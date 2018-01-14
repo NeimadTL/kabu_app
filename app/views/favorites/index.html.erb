@@ -1,31 +1,72 @@
-<H1>Favorite page</H1>
+<div class="container grid-xl">
+   <div class="columns">
 
-<% if @favorites && !@favorites.empty? %>
+    <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
+      <h5>Mes favoris</h5>
+    </div>
 
-  <table class="table table-striped">
-    <thead></thead>
-    <tbody>
-      <% @favorites.each do |favorite| %>
-  	    <tr>
-  	      <td>
-            <% if favorite.service.picture.present? %>
-              <%= image_tag favorite.service.picture, size: "200x200" %><br>
-            <% else %>
-              <%= image_tag 'default-picture', size: "200x200" %><br>
-            <% end %>
-  		      <%= favorite.service.title %> <br>
-		        <%= favorite.service.description %><br>
-		        <%= number_to_currency(favorite.service.price, unit: '€', separator: ",", 
-			      delimiter: "", format: "%n %u") %><br>
-		        <%= favorite.service.category.name %><br>
-		        <%= link_to "Voir plus", favorite.service, class: "btn" %><br>
-		      </td>
-  	    </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-	<p>Pas de services favoris</p>
-	<%= link_to "Chercher des services", root_path, class: "btn" %><br>
-<% end %>
+    <% if @favorites && !@favorites.empty? %>
+
+      <table class="table table-striped">
+        <thead></thead>
+        <tbody>
+          <% @favorites.each do |favorite| %>
+      	    <tr>
+      	      <td>
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+                      <% if favorite.service.picture.present? %>
+                        <%= image_tag favorite.service.picture, class: 'img-responsive' %><br>
+                      <% else %>
+                        <%= image_tag 'default-picture', class: 'img-responsive' %><br>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+                      <div class="text-bold text-uppercase">
+            		        <%= favorite.service.title %>
+                      </div>
+                      <div class="text-break text-justify">
+          		          <%= favorite.service.description %>
+                      </div>
+                      <div class="text-large">
+          		          <%= number_to_currency(favorite.service.price, unit: '€', separator: ",", 
+          			            delimiter: "", format: "%n %u") %><br>
+                      </div>
+                      <div class="text-italic text-lowercase">
+          		          <p>#<%= favorite.service.category.name %><p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+    		              <%= link_to "Voir plus", favorite.service, class: "btn" %><br>
+                   </div>
+                  </div>
+                </div>   
+    		      </td>
+      	    </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="container grid-xl">
+        <div class="columns">
+          <div class="column col-6">
+    	        <p>Vous n'avez pas encore de favoris</p>
+          </div>
+        </div>
+      </div>
+      <%= link_to "Chercher des prestations", root_path, class: "btn" %><br>
+    <% end %>
+  </div>
+</div>
 
