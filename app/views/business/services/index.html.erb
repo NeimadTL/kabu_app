@@ -1,35 +1,77 @@
-<h1>My services</h1>
+<div class="container grid-xl">
+   <div class="columns">
 
-<% if @services && !@services.empty? %>
+    <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
+      <h5>Mes prestations</h5>
+    </div>
 
-  <table class="table table-striped">
-    <thead></thead>
-    <tbody>
-      <% @services.each do |service| %>
-  	    <tr>
-  	      <td>
-            <% if service.picture.present? %>
-              <%= image_tag service.picture, size: "200x200" %><br>
-            <% else %>
-              <%= image_tag 'default-picture', size: "200x200" %><br>
-            <% end %>
-  		      <%= service.title %> <br>
-		        <%= service.description %><br>
-		        <%= number_to_currency(service.price, unit: '€', separator: ",", 
-			          delimiter: "", format: "%n %u") %><br>
-		        <%= service.category.name %><br>
-      	    <% if current_user && service.user == current_user %>
-      	      <%= link_to "Voir plus", business_service_path(service), class: "btn" %><br>
-        	  <%= link_to "Modifier", edit_business_service_path(service), class: "btn" %><br>
-        	  <%= link_to "Supprimer", business_service_path(service), method: :delete, 
-            	  data: {confirm: 'Are you sure you want to delete this?'}, class: "btn" %><br>
-      	    <% end %>
-		      </td>
-  	    </tr>
+    <div class="column col-2 col-xl-2 col-lg-4 col-md-6 col-sm-8 col-xs-8">
+      <% if current_user.for_business? %>
+        <%= link_to "Proposer une prestation", new_business_service_path, 
+            class: 'btn btn-primary btn-sm' %>
       <% end %>
-    </tbody>
-  </table>
-<% else %>
-	<p>Vous n'avez pas encore proposé de prestations</p>
-	<%= link_to "Proposez une prestation", new_business_service_path, class: "btn" %><br>
-<% end %>
+    </div>
+
+    <% if @services && !@services.empty? %>
+
+      <table class="table table-striped">
+        <thead></thead>
+        <tbody>
+          <% @services.each do |service| %>
+      	    <tr>
+      	      <td>
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+                      <% if service.picture.present? %>
+                        <%= image_tag service.picture, class: 'img-responsive' %><br>
+                      <% else %>
+                        <%= image_tag 'default-picture', class: 'img-responsive' %><br>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+                      <div class="text-bold text-uppercase">
+            		        <%= service.title %>
+                      </div>
+                      <div class="text-break text-justify">
+          		          <%= service.description %>
+                      </div>
+                      <div class="text-large">
+          		          <%= number_to_currency(service.price, unit: '€', separator: ",", 
+          			            delimiter: "", format: "%n %u") %><br>
+                      </div>
+                      <div class="text-italic text-lowercase">
+          		          <p>#<%= service.category.name %></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+                	    <% if current_user && service.user == current_user %>
+            	          <%= link_to "Voir plus", business_service_path(service), class: "btn" %>
+                        <%= link_to "Modifier", edit_business_service_path(service), class: "btn" %>
+                        <%= link_to "Supprimer", business_service_path(service), method: :delete, 
+                            data: {confirm: 'Are you sure you want to delete this?'}, class: "btn" %>
+                	    <% end %>
+                    </div>
+                  </div>
+                </div>
+    		      </td>
+      	    </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+    	<p>Vous n'avez pas encore proposé de prestations</p>
+    	<%= link_to "Proposez une prestation", new_business_service_path, class: "btn" %><br>
+    <% end %>
+  </div>
+</div>

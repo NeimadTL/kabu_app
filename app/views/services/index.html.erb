@@ -1,24 +1,58 @@
-<h1>Services#index</h1>
+<div class="container grid-xl">
+  <div class="columns">
+    <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-2">
+      <h5>Les prestations</h5>
+    </div>
 
-<table class="table table-striped">
-  <thead></thead>
-  <tbody>
-    <% @services.each do |service| %>
-  	  <tr>
-  	    <td>
-          <% if service.picture.present? %>
-              <%= image_tag service.picture, size: "200x200" %><br>
-            <% else %>
-              <%= image_tag 'default-picture', size: "200x200" %><br>
-            <% end %>
-  		    <%= service.title %> <br>
-		      <%= service.description %><br>
-		      <%= number_to_currency(service.price, unit: '€', separator: ",", 
-			        delimiter: "", format: "%n %u") %><br>
-		      <%= service.category.name %><br>
-		      <%= link_to "Voir plus", service, class: "btn" %><br>
-		    </td>
-  	  </tr>
-    <% end %>
-  </tbody>
-</table>
+    <table class="table table-striped">
+      <thead></thead>
+      <tbody>
+        <% @services.each do |service| %>
+      	  <tr>
+      	    <td>
+              <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+                      <% if service.picture.present? %>
+                        <%= image_tag service.picture, class: 'img-responsive' %><br>
+                      <% else %>
+                        <%= image_tag 'default-picture', class: 'img-responsive' %><br>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+                      <div class="text-bold text-uppercase">
+              		      <%= service.title %>
+                      </div>
+                      <div class="text-break text-justify">
+            		        <%= service.description %>
+                      </div>
+                      <div class="text-large">
+            		        <%= number_to_currency(service.price, unit: '€', separator: ",", 
+            			          delimiter: "", format: "%n %u") %><br>
+                      </div>
+                      <div class="text-italic text-lowercase">
+            		        <p>#<%= service.category.name %></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container grid-xl">
+                  <div class="columns">
+                    <div class="column col-12">
+    		              <%= link_to "Voir plus", service, class: "btn" %>
+                    </div>
+                  </div>
+                </div>
+    		    </td>
+      	  </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
