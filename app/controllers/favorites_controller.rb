@@ -2,7 +2,7 @@ class FavoritesController < ApplicationController
 
 
   before_action :authenticate_user!
-  before_action :require_authorized_for_current_service
+  before_action :require_to_be_customer
 
 
   def index
@@ -26,8 +26,8 @@ class FavoritesController < ApplicationController
 
   private
 
-    def require_authorized_for_current_service
-      if current_user.for_business
+    def require_to_be_customer
+      if current_user && current_user.for_business
         render text: "Unauthorized", status: :unauthorized
       end
     end
