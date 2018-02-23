@@ -1,6 +1,6 @@
 <div class="container grid-xl">
   <div class="columns">
-    
+
     <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
       <h5>Détail de la prestation</h5>
     </div>
@@ -36,7 +36,7 @@
           <%= @service.description %>
         </div>
         <div class="text-large">
-          <%= number_to_currency(@service.price, unit: '€', separator: ",", 
+          <%= number_to_currency(@service.price, unit: '€', separator: ",",
               delimiter: "", format: "%n %u") %>
         </div>
         <div class="text-italic text-lowercase">
@@ -46,14 +46,14 @@
     </div>
 
 
-    <% if current_user %> 
-    
+    <% if current_user %>
+
       <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
         <h5>Mettre en favoris</h5>
       </div>
 
       <% if current_user.has_favorite?(@service) %>
-        <%= form_for(current_user.favorites.find_by(service_id: @service.id), 
+        <%= form_for(current_user.favorites.find_by(service_id: @service.id),
           html: { method: :delete }) do |f| %>
           <%= f.submit "Supprimer des favoris", class: "btn " %>
         <% end %>
@@ -76,7 +76,7 @@
           </br>
           <%= f.text_area :content, label: false, placeholder: 'Message', class: 'form-input' %>
         </div>
-        <%= f.submit 'Send', class: 'btn' %>  
+        <%= f.submit 'Send', class: 'btn' %>
       <% end %>
     <% end %>
 
@@ -97,7 +97,7 @@
               <%= comment.content %>
             </div>
             <div class="text-bold">
-              <p>Par @Damien</p>
+              <p>Par <%= comment.user.firstname %> <%= comment.user.lastname %></p>
             </div>
           </div>
         </div>
