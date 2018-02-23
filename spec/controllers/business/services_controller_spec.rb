@@ -2,18 +2,21 @@ require 'rails_helper'
 
 RSpec.describe Business::ServicesController, type: :controller do
 
-  let(:user) { 
-    User.create!(email: "something@gmail.com", password: "12345678", 
-      password_confirmation: "12345678", for_business: true)
+  let(:user) {
+    User.create!(firstname: "John", lastname: "Doe",
+      address: "88 Colin P Kelly Jr St San Francisco, CA 94107. United States",
+      phonenumber: "+1 (877) 448-4820",
+      email: "something@gmail.com", password: "12345678", password_confirmation: "12345678",
+      for_business: true)
   }
   let(:agriculture) { Category.create!(name: 'AGRICULTURE') }
   let(:service) {
-    Service.create!(title: 'Prestation d\'agriculture', 
+    Service.create!(title: 'Prestation d\'agriculture',
     description: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
     when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-    It has survived not only five centuries, but also the leap into electronic typesetting, 
-    remaining essentially unchanged. It was popularised in the 1960s with the release of 
-    Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing 
+    It has survived not only five centuries, but also the leap into electronic typesetting,
+    remaining essentially unchanged. It was popularised in the 1960s with the release of
+    Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
     software like Aldus PageMaker including versions of Lorem Ipsum.',
     price: '9.9', category_id: agriculture.id, user_id: user.id)
   }
@@ -78,13 +81,13 @@ RSpec.describe Business::ServicesController, type: :controller do
     end
 
     it "with logged in user and good params, returns http redirect" do
-      post :create, 
+      post :create,
             service: {
               title: 'my awesome service',
               description: 'my super description',
               price: '9.9',
               category_id: agriculture.id
-            } 
+            }
       created_serivce = Service.last
       expect(created_serivce.title).to eq 'my awesome service'
       expect(created_serivce.description).to eq 'my super description'
@@ -96,7 +99,7 @@ RSpec.describe Business::ServicesController, type: :controller do
     end
 
     it "with logged in user and bad params, returns http unprocessable_entity" do
-      post :create, service: { title: nil, description: nil, price: nil, category_id: nil } 
+      post :create, service: { title: nil, description: nil, price: nil, category_id: nil }
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response).to render_template(:new)
     end
@@ -108,13 +111,13 @@ RSpec.describe Business::ServicesController, type: :controller do
       end
 
       it "returns http redirect" do
-        post :create, 
+        post :create,
             service: {
               title: 'my awesome service',
               description: 'my super description',
               price: '9.9',
               category_id: agriculture.id
-            } 
+            }
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -194,13 +197,13 @@ RSpec.describe Business::ServicesController, type: :controller do
     end
 
     it "with authorized logged in user, returns http redirect" do
-      put :update, 
-          id: service.id, 
+      put :update,
+          id: service.id,
           service: {
             title: 'my awesome service',
             description: 'my super description',
             price: '100',
-          } 
+          }
       updated_service = Service.find(service.id)
       expect(updated_service.title).to eq 'my awesome service'
       expect(updated_service.description).to eq 'my super description'
@@ -212,7 +215,7 @@ RSpec.describe Business::ServicesController, type: :controller do
 
     it "with unauthorized logged in user, returns http unauthorized" do
       User.find(user.id).update_attributes(for_business: false)
-      put :update, 
+      put :update,
           id: service.id,
           service: {
             title: 'my awesome service',
@@ -230,7 +233,7 @@ RSpec.describe Business::ServicesController, type: :controller do
       end
 
       it "returns http redirect" do
-        put :update, 
+        put :update,
             id: service.id,
             service: {
             title: 'my awesome service',
