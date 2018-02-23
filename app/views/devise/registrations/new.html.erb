@@ -1,6 +1,6 @@
 <div class="container grid-xl">
   <div class="columns">
-    
+
     <div class="column col-10 col-xl-10 col-lg-8 col-md-6 col-sm-4 col-xs-4">
       <h5>Inscription</h5>
     </div>
@@ -10,26 +10,34 @@
         <div class="column col-12">
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
             <%= devise_error_messages! %>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'email', 
-                  class: 'form-input' %>
-              <br>
-              <% if @minimum_password_length %>
+            <%= f.text_field :firstname, placeholder: 'firstname',class: 'form-input' %>
+            <br>
+            <%= f.text_field :lastname, placeholder: 'lastname',class: 'form-input' %>
+            <br>
+            <%= f.text_field :address, placeholder: 'address',class: 'form-input' %>
+            <br>
+            <%= f.text_field :phonenumber, placeholder: 'phonenumber',class: 'form-input' %>
+            <br>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'email',
+                class: 'form-input' %>
+            <br>
+            <% if @minimum_password_length %>
               <em>(<%= @minimum_password_length %> characters minimum)</em>
-              <% end %><br />
-              <%= f.password_field :password, autocomplete: "off", placeholder: 'password', 
-                  class: 'form-input' %>
-              <br>      
-              <%= f.password_field :password_confirmation, autocomplete: "off", 
-                  placeholder: 'password confirmation', class: 'form-input' %>
-            
+            <% end %><br />
+            <%= f.password_field :password, autocomplete: "off", placeholder: 'password',
+                class: 'form-input' %>
+            <br>
+            <%= f.password_field :password_confirmation, autocomplete: "off",
+                placeholder: 'password confirmation', class: 'form-input' %>
 
-              <div class="form-group">
-                <%= f.check_box :for_business, class: 'form-icon' %>
-                <%= f.label :for_business, "For business", class: 'form-checkbox' %>
-              </div>
 
-              <%= f.submit "S'inscrire", class: 'btn' %>
-            
+            <div class="form-group">
+              <%= f.check_box :for_business, class: 'form-icon' %>
+              <%= f.label :for_business, "For business", class: 'form-checkbox' %>
+            </div>
+
+            <%= f.submit "S'inscrire", class: 'btn' %>
+
           <% end %>
 
     <%= render "devise/shared/links" %>
